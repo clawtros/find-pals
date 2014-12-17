@@ -8,6 +8,8 @@ var express = require('express'),
     handlebars = require('handlebars'),
     fs = require('fs'),
     mapTemplate = handlebars.compile(fs.readFileSync('./map.hbs', 'utf-8')),
+    indexTemplate = handlebars.compile(fs.readFileSync('./index.hbs', 'utf-8')),
+    randomstring = require('randomstring'),
     PORT = 9999;
 
 
@@ -15,9 +17,8 @@ app.get('/:room_id/', function(req, res) {
     res.send(mapTemplate({ room: req.params.room_id }));
 });
 
-
 app.get('/', function(req, res) {
-    res.sendFile(__dirname + '/index.html');
+    res.send(indexTemplate({ randomString: randomstring.generate(5) }));
 });
 
 app.use("/media", express.static(__dirname + '/media'));
