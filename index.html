@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+    <head>
+	<link rel="stylesheet" href="media/styles/map.css">
+	<title>Meet</title>
+    </head>
+    <body>
+	<div id="map"></div>
+    </body>
+     <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?libraries=geometry&sensor=true_or_false&key=AIzaSyC_blTx4rvNR43Cx0HzfEIwZ-cop0swH9o">
+    </script>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+     var socket = io();
+    </script>
+
+    <script src="media/scripts/map.js"></script>
+    <script>
+     var meet = new Meet({ socket: socket});
+     meet.start();
+    </script>
+</html>

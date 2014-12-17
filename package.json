@@ -1,0 +1,17 @@
+{
+  "name": "geolo",
+  "version": "1.0.0",
+  "description": "Map with viewers marked",
+  "main": "map.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "browserify": "^7.0.2",
+    "express": "^4.10.6",
+    "handlebars": "^2.0.0",
+    "socket.io": "^1.2.1"
+  }
+}
