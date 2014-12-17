@@ -14,6 +14,10 @@ var express = require('express'),
 
 
 app.get('/:room_id/', function(req, res) {
+    var room_id = req.params.room_id;
+    if (locations[room_id] === undefined) {
+        locations[room_id] = {};
+    }
     res.send(mapTemplate({ room: req.params.room_id }));
 });
 
@@ -23,15 +27,19 @@ app.get('/', function(req, res) {
 
 app.use("/media", express.static(__dirname + '/media'));
 
-io.on('connection', function(socket){
+io.on('connection', function(socket) {
+    socket.on('set room', function(room) {
+        socket.room = room;
+    });
+
     socket.on('pos', function(newpos) {
-        locations[socket.id] = newpos;
-        socket.emit('positions updated', locations);
+        locations[socket.room][socket.id] = newpos;
+        socket.emit('positions updated', locations[socket.room]);
     });
     
     socket.on('disconnect', function() {
         io.emit('remove position', socket.id);
-        delete locations[socket.id];
+        delete locations[socket.room][socket.id];
     });
 });
 

@@ -2,6 +2,7 @@
 
 var Meet = function(options) {
     this.options = options;
+    this.room = options.room;
     this.socket = options.socket;
     this.markers = {};
 };
@@ -16,6 +17,7 @@ Meet.prototype = {
 	};
 	this.map = new google.maps.Map(document.getElementById('map'),
 				       mapOptions);
+        this.socket.emit('set room', this.room);
         this.updateLocation(true);
         this.socket.on('positions updated', function(positions) {
             for (var marker_id in self.markers) {
@@ -44,8 +46,10 @@ Meet.prototype = {
         });
 
         this.socket.on('remove position', function(position_id) {
-            self.markers[position_id].marker.setMap(null);
-            delete self.markers[position_id];
+            if (self.markers[position_id]) {
+                self.markers[position_id].marker.setMap(null);
+                delete self.markers[position_id];
+            }
         });
         
         this.interval = setInterval((function(scope) {
