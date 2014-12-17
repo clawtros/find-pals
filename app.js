@@ -29,16 +29,17 @@ app.use("/media", express.static(__dirname + '/media'));
 
 io.on('connection', function(socket) {
     socket.on('set room', function(room) {
+        socket.join(room);
         socket.room = room;
     });
 
     socket.on('pos', function(newpos) {
         locations[socket.room][socket.id] = newpos;
-        socket.emit('positions updated', locations[socket.room]);
+        io.to(socket.room).emit('positions updated', locations[socket.room]);
     });
     
     socket.on('disconnect', function() {
-        io.emit('remove position', socket.id);
+        io.to(socket.room).emit('remove position', socket.id);
         delete locations[socket.room][socket.id];
     });
 });
