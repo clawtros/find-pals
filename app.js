@@ -34,13 +34,22 @@ io.on('connection', function(socket) {
     });
 
     socket.on('pos', function(newpos) {
+        console.log(locations);
         locations[socket.room][socket.id] = newpos;
         io.to(socket.room).emit('positions updated', locations[socket.room]);
     });
     
     socket.on('disconnect', function() {
         io.to(socket.room).emit('remove position', socket.id);
-        delete locations[socket.room][socket.id];
+        if (locations[socket.room]) {
+            if (locations[socket.room][socket.id]) {
+                delete locations[socket.room][socket.id];
+            }
+            
+            if (locations[socket.room].length === 0) {
+                delete locations[socket.room];
+            }
+        }
     });
 });
 
