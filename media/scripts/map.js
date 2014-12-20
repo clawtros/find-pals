@@ -1,7 +1,6 @@
 /*global module, google, setInterval, setTimeout */
 
-var LOCATION_POLL_RATE = 3000,
-    Meet = function(options) {
+var Meet = function(options) {
         this.options = options;
         this.room = options.room;
         this.socket = options.socket;
@@ -86,13 +85,5 @@ Meet.prototype = {
             self.lastPos = latlng;
             
         };
-    },
-    
-    getPosition: function(callback) {
-        navigator.geolocation.getCurrentPosition(callback);
-    },
-    
-    watchPosition: function(callback) {
-        navigator.geolocation.watchPosition(callback);
     }
 };
