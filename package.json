@@ -11,7 +11,7 @@
   "dependencies": {
     "browserify": "^7.0.2",
     "express": "^4.10.6",
-    "handlebars": "^2.0.0",
+    "handlebars": "^4.4.5",
     "randomstring": "^1.0.3",
     "socket.io": "^1.2.1"
   }
